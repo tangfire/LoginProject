@@ -20,11 +20,9 @@ public class UserController extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uname = req.getParameter("account");
         String upwd = req.getParameter("password");
-        System.out.println("uname:" + uname);
-        System.out.println("upwd:" + upwd);
+
         MessageModel messageModel =  userService.userLogin(uname,upwd);
 
-        System.out.println("messageModel"+ messageModel);
 
         // 设置响应类型为 JSON
         resp.setContentType("application/json;charset=utf-8");
@@ -34,9 +32,8 @@ public class UserController extends HttpServlet {
 
         if (messageModel.getCode() == 1) {
             req.getSession().setAttribute("user", messageModel.getObject());
-            System.out.println("object = "+messageModel.getObject());
             String jsonResponse = objectMapper.writeValueAsString(messageModel);
-            System.out.println("jsonResponse:" + jsonResponse);
+
             resp.getWriter().write(jsonResponse);
         } else {
             String jsonResponse = objectMapper.writeValueAsString(messageModel);

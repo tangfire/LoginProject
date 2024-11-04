@@ -17,7 +17,7 @@ public class UserService {
      */
     public MessageModel userLogin(String uname,String upwd){
 
-        System.out.println("login uname = "+uname);
+
         MessageModel messageModel = new MessageModel();
 
         User u = new User();
@@ -25,32 +25,31 @@ public class UserService {
         u.setUserPwd(upwd);
         messageModel.setObject(u);
 
-        System.out.println("user = " + u );
+
 
         if (StringUtil.isEmpty(uname) || StringUtil.isEmpty(upwd)) {
-            System.out.println("hhhhhh");
+
             messageModel.setCode(0);
             messageModel.setMsg("用户名或者密码错误");
-            System.out.println("用户名或者密码错误");
 
             return messageModel;
         }
 
-        System.out.println("gggggggg");
+
 
         SqlSession sqlSession = MybatisUtils.getSqlSession();
-        System.out.println("3");
+
         UserMapper mapper =  sqlSession.getMapper(UserMapper.class);
-        System.out.println("2");
+
         User user =  mapper.queryUserByName(uname);
-        System.out.println("1");
+
 
         sqlSession.close();
 
 
 
 
-        System.out.println("mysql user = " + user );
+
         if (user == null) {
             messageModel.setCode(0);
             messageModel.setMsg("用户不存在");
